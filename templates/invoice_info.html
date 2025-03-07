@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document Title</title>
+        <link rel="stylesheet" href="/Users/jasskahlon/Desktop/load_manager/static/invoice_info.css"> <!-- Link to an external CSS file -->
+    </head>
+    <body>
+        <header>
+            <h1>Enter Invoice Info</h1>
+        </header>
+
+        <main>
+            <header>
+                <h2>Info Below</h2>
+            </header>
+            <div class="full_form">
+            <form action="/process_invoice" method="POST">
+                <div class="bill_to">
+                <h4>Billed To:</h4>
+                <h3>Address Form</h3>
+                <label for="bill_to">Company or Person</label>
+                <input type="text" name="bill_to" id="bill_to" placeholder="Ex: Apple Co." required>
+
+                <label for="street_name">Street Name</label>
+                <input type="text" name="Street" id="street" placeholder="Ex: 124 Conch St" required>
+    
+                <label for="city">City</label>
+                <input type="text" name="city" id="city" placeholder="Ex: Toronto" required>
+    
+                <label for="state">State/Province/Territory</label>
+                <input type="text" name="state" id="state" placeholder="Ex: Ontario" required>
+    
+                <label for="zip">Zip Code</label>
+                <input type="text" name="zip" id="zip" placeholder="Ex: 90210">
+            </div>
+
+
+                <div class="invoice_table">
+                <input type="number" name="invoice_num" id="invoice_num" placeholder="Ex: 212" required>
+                <input type="date" name="invoice_date" id="invoice_date" required>
+                <input type="text" name="invoice_loaction" id="invoice_location" placeholder="Ex: Amazon to Gapp" required>
+                <input type="text" name="waybill_num" id="waybill_num" placeholder="Ex: 385275833" required>
+                <input type="number" name="num_loads" id="num_loads"  min="0" placeholder="$0.00" required>
+                <input type="number" name="load_price" id="load_price" min="0" placeholder="$0.00" required>
+
+                <button type="button" onclick="add_line()">Add Line</button>
+            </div>
+        </div>
+            </form>
+
+            <div class="invoice_preview">
+                <header><h1>Invoice Preview</h1></header>
+
+                <div class="invoice_top_bar">
+                    
+                </div>
+        
+
+
+
+
+            </div>
+
+
+
+        </main>
+    </body>
+</html>

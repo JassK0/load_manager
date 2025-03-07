@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>User Info</h1>
+    </header>
+
+    <main>
+        <header>
+            <h2>Enter Company Info</h2>
+        </header>
+        <div class="full_form">
+
+        <form action="/process_user_info" method="POST">
+            <div class="logo_name">
+            <label for="logo">Add Logo</label>
+            <input type="file" name="logo" id="logo" accept="image/*" required>
+                
+            <label for="company_name">Enter Compnay Name</label>
+            <input type="text" name="company_name" id="company_name" placeholder="Ex: JS Carrier" required>
+        </div>
+        
+            <div class="address">
+            <h3>Address Form</h3>
+            <label for="street_name">Street Name</label>
+            <input type="text" name="Street" id="street" placeholder="Ex: 124 Conch St" required>
+
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" placeholder="Ex: Toronto" required>
+
+            <label for="state">State/Province/Territory</label>
+            <input type="text" name="state" id="state" placeholder="Ex: Ontario" required>
+
+            <label for="zip">Zip Code</label>
+            <input type="text" name="zip" id="zip" placeholder="Ex: 90210">
+        </div>
+        </form>
+    </div>
+
+
+
+    </main>
+</body>
+</html>
