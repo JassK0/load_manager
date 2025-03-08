@@ -1,71 +1,235 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document Title</title>
-        <link rel="stylesheet" href="/Users/jasskahlon/Desktop/load_manager/static/invoice_info.css"> <!-- Link to an external CSS file -->
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='invoice_info.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Enter Invoice Info</h1>
+    </header>
+
+    <main>
         <header>
-            <h1>Enter Invoice Info</h1>
+            <h2>Info Below</h2>
         </header>
 
-        <main>
-            <header>
-                <h2>Info Below</h2>
-            </header>
-            <div class="full_form">
-            <form action="/process_invoice" method="POST">
-                <div class="bill_to">
-                <h4>Billed To:</h4>
-                <h3>Address Form</h3>
-                <label for="bill_to">Company or Person</label>
-                <input type="text" name="bill_to" id="bill_to" placeholder="Ex: Apple Co." required>
+        <!-- Company Info and Logo Upload -->
+        <div class="full_form">
+            <form action="/process_user_info" method="POST" enctype="multipart/form-data">
+                <div class="logo_name">
+                    <label for="logo">Add Logo</label>
+                    <input type="file" name="logo" id="logo" accept="image/*" required>
+                    
+                    <label for="company_name">Enter Company Name</label>
+                    <input type="text" name="company_name" id="company_name" placeholder="Ex: JS Carrier" required>
 
-                <label for="street_name">Street Name</label>
-                <input type="text" name="Street" id="street" placeholder="Ex: 124 Conch St" required>
-    
-                <label for="city">City</label>
-                <input type="text" name="city" id="city" placeholder="Ex: Toronto" required>
-    
-                <label for="state">State/Province/Territory</label>
-                <input type="text" name="state" id="state" placeholder="Ex: Ontario" required>
-    
-                <label for="zip">Zip Code</label>
-                <input type="text" name="zip" id="zip" placeholder="Ex: 90210">
-            </div>
+                    <label for="invoice_num">Invoice Number</label>
+                    <input type="number" name="invoice_num" id="invoice_num" placeholder="Ex: 212" required>
+                </div>
+                
+                <h4>Your Info:</h4>
+                <div class="address">
+                    <h3>Company Address Form</h3>
+                    <label for="street">Street Name</label>
+                    <input type="text" name="Street" id="street" placeholder="Ex: 124 Conch St" required>
 
+                    <label for="city">City</label>
+                    <input type="text" name="city" id="city" placeholder="Ex: Toronto" required>
 
-                <div class="invoice_table">
-                <input type="number" name="invoice_num" id="invoice_num" placeholder="Ex: 212" required>
-                <input type="date" name="invoice_date" id="invoice_date" required>
-                <input type="text" name="invoice_loaction" id="invoice_location" placeholder="Ex: Amazon to Gapp" required>
-                <input type="text" name="waybill_num" id="waybill_num" placeholder="Ex: 385275833" required>
-                <input type="number" name="num_loads" id="num_loads"  min="0" placeholder="$0.00" required>
-                <input type="number" name="load_price" id="load_price" min="0" placeholder="$0.00" required>
+                    <label for="state">State/Province/Territory</label>
+                    <input type="text" name="state" id="state" placeholder="Ex: Ontario" required>
 
-                <button type="button" onclick="add_line()">Add Line</button>
-            </div>
+                    <label for="zip">Zip Code</label>
+                    <input type="text" name="zip" id="zip" placeholder="Ex: 90210">
+                </div>
+                <button type="submit">Submit Company Info</button>
+            </form>
         </div>
+
+        <!-- Billed To Info Form -->
+        <div class="full_form">
+            <form action="/process_billed_to" method="POST">
+                <div class="bill_to">
+                    <h4>Billed To:</h4>
+                    <h3>Address Form</h3>
+
+                    <label for="bill_to">Company or Person</label>
+                    <input type="text" name="bill_to" id="bill_to" placeholder="Ex: Apple Co." required>
+
+                    <label for="street_name">Street Name</label>
+                    <input type="text" name="street_name" id="street_name" placeholder="Ex: 6225 Kennedy Road" required>
+
+                    <label for="city">City</label>
+                    <input type="text" name="city" id="city" placeholder="Ex: Mississauga" required>
+
+                    <label for="state">State/Province/Territory</label>
+                    <input type="text" name="state" id="state" placeholder="Ex: Ontario" required>
+
+                    <label for="zip">Zip Code</label>
+                    <input type="text" name="zip" id="zip" placeholder="Ex: L5T5Z8" required>
+                </div>
+                <button type="submit">Submit Billed To Info</button>
+            </form>
+        </div>
+
+        <!-- Invoice Line Items Form -->
+        <div class="invoice_table">
+            <form action="/invoice_lines" method="POST">
+                <input type="hidden" name="line_index" id="line_index" value="">
+
+                <label for="invoice_date">Invoice Date</label>
+                <input type="date" name="invoice_date" id="invoice_date" required>
+
+                <label for="invoice_location">Location</label>
+                <input type="text" name="invoice_location" id="invoice_location" placeholder="Ex: Amazon to Pilot" required>
+
+                <label for="waybill_num">Waybill Number</label>
+                <input type="text" name="waybill_num" id="waybill_num" placeholder="Ex: 385275833" required>
+
+                <label for="num_loads">Number of Loads</label>
+                <input type="number" name="num_loads" id="num_loads" placeholder="Ex: 1" required>
+
+                <label for="load_price">Price per Load</label>
+                <input type="number" name="load_price" id="load_price" placeholder="Ex: 300.00" required>
+
+                <button type="submit">Add/Update Line</button>
             </form>
 
-            <div class="invoice_preview">
-                <header><h1>Invoice Preview</h1></header>
+            <!-- Display Invoice Lines with Actions -->
+            <table class="invoice_table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Waybill</th>
+                        <th>Loads</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, line in enumerate(invoice_lines) %}
+                        <tr>
+                            <td>{{ line.invoice_date }}</td>
+                            <td>{{ line.invoice_location }}</td>
+                            <td>{{ line.waybill_num }}</td>
+                            <td>{{ line.num_loads }}</td>
+                            <td>${{ line.total_price }}</td>
+                            <td>
+                                <a href="{{ url_for('edit_invoice_line', index=index) }}">Edit</a>
+                                <a href="{{ url_for('delete_invoice_line', index=index) }}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-                <div class="invoice_top_bar">
-                    
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Invoice Info</title>
+            <link rel="stylesheet" href="{{ url_for('static', filename='invoice_info.css') }}">
+        </head>
+        <body>
+            <main>
+                <!-- Invoice Header with Logo and Company Info -->
+                <div class="invoice_header">
+                    <div class="logo">
+                        {% if filename %}
+                            <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Company Logo">
+                        {% else %}
+                            <p>No Logo Uploaded</p>
+                        {% endif %}
+                    </div>
+                    <div class="company_info">
+                        <h2>{{ company_name }}</h2>
+                        <p>2 Forrester Drive<br>Brampton<br>Ontario<br>L6Y4K5</p>
+                    </div>
                 </div>
         
-
-
-
-
-            </div>
-
-
-
-        </main>
-    </body>
+                <!-- Bill To Section -->
+                <div class="bill_to">
+                    <h4>BILL TO:</h4>
+                    <p><strong>{{ bill_to }}</strong><br>
+                    {{ street_name }}<br>
+                    {{ city }}<br>
+                    {{ state }}<br>
+                    {{ zip }}</p>
+                </div>
+        
+                <!-- Invoice Number and Date -->
+                <div class="invoice_details">
+                    <div>
+                        <h4>INVOICE #</h4>
+                        <p>{{ invoice_num }}</p>
+                    </div>
+                    <div>
+                        <h4>DATE</h4>
+                        <p>{{ invoice_date }}</p>
+                    </div>
+                </div>
+        
+                <!-- Editable Invoice Preview -->
+                <div class="invoice_preview">
+                    <table class="invoice_table">
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>LOCATION</th>
+                                <th>WAYBILL</th>
+                                <th>LOADS</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, line in enumerate(invoice_lines) %}
+                                <tr data-index="{{ index }}">
+                                    <td contenteditable="true" data-field="invoice_date">{{ line.invoice_date }}</td>
+                                    <td contenteditable="true" data-field="invoice_location">{{ line.invoice_location }}</td>
+                                    <td contenteditable="true" data-field="waybill_num">{{ line.waybill_num }}</td>
+                                    <td contenteditable="true" data-field="num_loads">{{ line.num_loads }}</td>
+                                    <td contenteditable="true" data-field="total_price">${{ line.total_price }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+        
+                    <a href="{{ url_for('clear_invoice') }}">
+                        <button type="button">Clear Invoice</button>
+                    </a>
+                </div>
+        
+                <!-- JavaScript for Inline Editing -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const table = document.querySelector('.invoice_table tbody');
+        
+                        table.addEventListener('focusout', async (event) => {
+                            const cell = event.target;
+                            if (cell.hasAttribute('contenteditable')) {
+                                const row = cell.closest('tr');
+                                const index = row.getAttribute('data-index');
+                                const field = cell.getAttribute('data-field');
+                                const value = cell.textContent.trim();
+        
+                                // Send the updated data to the server
+                                await fetch('/update_invoice_line', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ index, field, value })
+                                });
+                            }
+                        });
+                    });
+                </script>
+        
+</body>
 </html>

@@ -2,6 +2,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}"> <!-- Link to an external CSS file -->
+
     <title>Document</title>
 </head>
 <body>
@@ -9,9 +11,11 @@
     <header>Invoice Maker</header>
 
     <ul>
-        <li><a href="templates/dashboard.html">Create Invoice</a></li>
-        <li><a href="">My Dashboard</a></li>
+        <li><a href="{{ url_for('invoice_info') }}">Create Invoice</a></li>
+        <li><a href="{{ url_for('dashboard') }}">My Dashboard</a></li>
+        <li><a href="{{ url_for('user_info') }}">My Account</a></li>
     </ul>
+    
     
 </body>
 </html>

@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_info.css') }}"> <!-- Link to an external CSS file -->
     <title>Document</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
         </header>
         <div class="full_form">
 
-        <form action="/process_user_info" method="POST">
+        <form action="/process_user_info" method="POST" enctype="multipart/form-data">
             <div class="logo_name">
             <label for="logo">Add Logo</label>
             <input type="file" name="logo" id="logo" accept="image/*" required>
@@ -23,10 +24,10 @@
             <label for="company_name">Enter Compnay Name</label>
             <input type="text" name="company_name" id="company_name" placeholder="Ex: JS Carrier" required>
         </div>
-        
+
             <div class="address">
             <h3>Address Form</h3>
-            <label for="street_name">Street Name</label>
+            <label for="street">Street Name</label>
             <input type="text" name="Street" id="street" placeholder="Ex: 124 Conch St" required>
 
             <label for="city">City</label>
@@ -38,6 +39,7 @@
             <label for="zip">Zip Code</label>
             <input type="text" name="zip" id="zip" placeholder="Ex: 90210">
         </div>
+        <button type="submit">Submit Company Info</button>
         </form>
     </div>
 
