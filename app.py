@@ -27,6 +27,10 @@ app.jinja_env.globals.update(enumerate=enumerate)
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route('/user_info')
+def user_info():
+    return render_template('user_info.html')
+
 # Route for Invoice Info Page
 @app.route('/invoice_info')
 def invoice_info():
@@ -139,6 +143,7 @@ def delete_invoice_line(index):
 def clear_invoice():
     session.pop('invoice_lines', None)
     session.pop('invoice_num', None)
+    session.pop('')
     return redirect(url_for('invoice_info'))
 
 # Serve Uploaded Logo Files
